@@ -3,7 +3,7 @@
 import re
 
 def findelement(pagefeed, elementregex):
-	return re.split(elementregex, pagefeed)[1]
+	return re.split(elementregex, pagefeed)
 
 
 
