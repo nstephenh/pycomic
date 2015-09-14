@@ -1,33 +1,38 @@
 #Downloads the html available on the specified page
-import urllib2
+import urllib.request
 import cracker
 def fetchpage(url):
 	try:
-		return urllib2.urlopen(url).read()
+		print("downloading page " + url)
+		return str(urllib.request.urlopen(url).read())
+		
 		#The following is for testing purposes only
 		#return """<a href="content/nextpage/example.test" class="navi navi-next" title="Next">Next</a>"""
 
 	except:
-		print("No internet Connection")	
-		return "No internet Connection"
+		return None
 def fetchcomic(comicdef, download_directory):
 	""" 
-	Precondition: comicdef is a list containing [name, startpage, nextregex, imgregex] 
-	
+	Precondition: 	comicdef is a list containing [name, startpage, nextregex, imgregex] 
+			download_directory is a string 	
 	"""
 	current_page_url = comicdef[1]
 	while current_page_url != "done":
 		#get the current page
 		pagefeed = fetchpage(current_page_url)
-		
+		if pagefeed == None:
+			current_page_url = "done"
+			print("Either internet is down or the last page of the comic was reached")
+			break	
 		#find and download the image to download_directory/comicname/the image's name
 		img_url = cracker.findelement(pagefeed, comicdef[3])
-		print("downloading " + img_url)
-		urllib2.urlretrieve(img_url, download_directory + comic_name + img_url.split("/")[-1])
+		print("downloading image " + img_url)
+		print(urllib.request.urlretrieve(img_url, download_directory + comicdef[0] + img_url.split("/")[-1]))
+
 		
 		
 		#fetch the next page
-		current_page_url = cracker.findelement(pagefeed, comicdef[2])[1]
+		current_page_url = cracker.findelement(pagefeed, comicdef[2])
 		if current_page_url == "No internet connection" or current_page_url == None:
 			current_page_url = "done"
 			#this will stop the loop

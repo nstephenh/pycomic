@@ -3,7 +3,9 @@
 import re
 
 def findelement(pagefeed, elementregex):
-	return re.split(elementregex, pagefeed)
+	regex = re.compile(elementregex)
+	print("searching for "+ elementregex)
+	return regex.search(pagefeed).group(1)
 
 
 
