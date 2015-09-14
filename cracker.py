@@ -8,4 +8,3 @@ def findelement(pagefeed, elementregex):
 	return regex.search(pagefeed).group(1)
 
 
-
