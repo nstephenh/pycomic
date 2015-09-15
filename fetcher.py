@@ -1,6 +1,11 @@
 #Downloads the html available on the specified page
 import urllib.request
+
+import time
+
 import cracker
+
+
 def fetchpage(url):
 	try:
 		print("downloading page " + url)
@@ -9,8 +14,18 @@ def fetchpage(url):
 		#The following is for testing purposes only
 		#return """<a href="content/nextpage/example.test" class="navi navi-next" title="Next">Next</a>"""
 
-	except:
+	except urllib.error.URLError as e:
+		print(e)
 		return None
+def fetchpageretry(url):
+	for i in range (3):
+		pagefeed = fetchpage(url)
+		if pagefeed != None:
+			return pagefeed
+		else:
+			print("Download failed on try %d, retrying" % i)
+			time.sleep((i+1)*2)
+	return None 
 def fetchcomic(comicdef, download_directory):
 	""" 
 	Precondition: 	comicdef is a list containing [name, startpage, nextregex, imgregex] 
@@ -19,7 +34,7 @@ def fetchcomic(comicdef, download_directory):
 	current_page_url = comicdef[1]
 	while current_page_url != "done":
 		#get the current page
-		pagefeed = fetchpage(current_page_url)
+		pagefeed = fetchpageretry(current_page_url)
 		if pagefeed == None:
 			current_page_url = "done"
 			print("Either internet is down or the last page of the comic was reached")
