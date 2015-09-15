@@ -4,7 +4,9 @@ import re
 
 def findelement(pagefeed, elementregex):
 	regex = re.compile(elementregex)
-	print("searching for "+ elementregex)
+	print("searching for " + elementregex)
 	return regex.search(pagefeed).group(1)
 
-
+def findreplacespace(pagefeed, elementregex):
+	spaces = findelement(pagefeed, elementregex)
+	return str.replace(spaces, " ", "%20")

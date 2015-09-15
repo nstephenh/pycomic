@@ -25,7 +25,7 @@ def fetchcomic(comicdef, download_directory):
 			print("Either internet is down or the last page of the comic was reached")
 			break	
 		#find and download the image to download_directory/comicname/the image's name
-		img_url = cracker.findelement(pagefeed, comicdef[3])
+		img_url = cracker.findreplacespace(pagefeed, comicdef[3])
 		print("downloading image " + img_url)
 		print(urllib.request.urlretrieve(img_url, download_directory + comicdef[0] + img_url.split("/")[-1]))
 
