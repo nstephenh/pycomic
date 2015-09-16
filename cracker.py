@@ -5,8 +5,11 @@ import re
 def findelement(pagefeed, elementregex):
 	regex = re.compile(elementregex)
 	print("searching for " + elementregex)
-	return regex.search(pagefeed).group(1)
+	results =regex.search(pagefeed)
+	if results != None:
+		#returns if the item exists, replacing spaces with %20
+		return str.replace(results.group(1), " ", "%20")
+	else:
+		#if the item does no exist, return None
+		return None
 
-def findreplacespace(pagefeed, elementregex):
-	spaces = findelement(pagefeed, elementregex)
-	return str.replace(spaces, " ", "%20")

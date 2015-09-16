@@ -26,29 +26,28 @@ def fetchpageretry(url):
 			print("Download failed on try %d, retrying" % i)
 			time.sleep((i))
 	return None 
+
 def fetchcomic(comicdef, download_directory):
 	""" 
 	Precondition: 	comicdef is a list containing [name, startpage, nextregex, imgregex] 
 			download_directory is a string 	
 	"""
+	#Sets the first page to be the start page
 	current_page_url = comicdef[1]
-	while current_page_url != "done":
-		#get the current page
-		pagefeed = fetchpageretry(current_page_url)
-		if pagefeed == None:
-			current_page_url = "done"
-			print("Either internet is down or the last page of the comic was reached")
-			break	
-		#find and download the image to download_directory/comicname/the image's name
-		img_url = cracker.findreplacespace(pagefeed, comicdef[3])
-		print("downloading image " + img_url)
-		print(urllib.request.urlretrieve(img_url, download_directory + comicdef[0] + img_url.split("/")[-1]))
 
+	#As long as there is a next page to get, get that page
+	while current_page_url != None:
+		#get the current pages contents
+		pagefeed = fetchpageretry(current_page_url)
 		
+		
+		#find and download the image from said page
+		img_url = cracker.findelement(pagefeed, comicdef[3])
+		print("downloading image " + img_url)
+		urllib.request.urlretrieve(img_url, download_directory + comicdef[0] + img_url.split("/")[-1])
+
 		
 		#fetch the next page
 		current_page_url = cracker.findelement(pagefeed, comicdef[2])
-		if current_page_url == "No internet connection" or current_page_url == None:
-			current_page_url = "done"
-			#this will stop the loop
-	
+	print("Finished downloading " + comicdef[0])
+
