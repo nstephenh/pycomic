@@ -44,7 +44,7 @@ def fetchcomic(comicdef, download_directory):
 		#find and download the image from said page
 		img_url = cracker.findelement(pagefeed, comicdef[3])
 		print("downloading image " + img_url)
-		urllib.request.urlretrieve(img_url, download_directory + comicdef[0] + img_url.split("/")[-1])
+		urllib.request.urlretrieve(img_url, download_directory +"/" +  comicdef[0] + "/" + img_url.split("/")[-1])
 
 		
 		#fetch the next page
