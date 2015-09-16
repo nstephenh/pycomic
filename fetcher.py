@@ -18,13 +18,13 @@ def fetchpage(url):
 		print(e)
 		return None
 def fetchpageretry(url):
-	for i in range (3):
+	for i in range (10):
 		pagefeed = fetchpage(url)
 		if pagefeed != None:
 			return pagefeed
 		else:
 			print("Download failed on try %d, retrying" % i)
-			time.sleep((i+1)*2)
+			time.sleep((i))
 	return None 
 def fetchcomic(comicdef, download_directory):
 	""" 
