@@ -12,4 +12,12 @@ def findelement(pagefeed, elementregex):
 	else:
 		#if the item does no exist, return None
 		return None
-
+def findurl(pagefeed, elementregex, siteurl):
+	element = findelement(pagefeed, elementregex)
+	#if the element isn't an absolute link, then make it one
+	if element != None and element[:4] != "http":
+		return (siteurl + element)
+	elif element != None:
+		return element
+	else:
+		return None

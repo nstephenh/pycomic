@@ -22,6 +22,7 @@ def readdef(defdirectory):
 				break
 			elif defline[0] != "#":
 				comicdef.append(str(defline))
-		#writes all but the last (blank) line of comcidef to the comiclist array
+		if len(comicdef) != 5:
+			comicdef.append("")
 		comiclist.append(comicdef)
 	return comiclist
