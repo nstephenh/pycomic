@@ -2,9 +2,14 @@ print("Pywoofy")
 
 import fetcher
 import cracker
+import mrpeabody
+
+import os
+
 keeprunning = 1
+
 # comic name, starturl, nextlinkregex, imgregex
-comiclist=[["grrl power", """http://grrlpowercomic.com/archives/48""","""<a href="(http://grrlpowercomic.com/archives/[^"]*?)" class="navi navi-next" title="Next">Next</a>""","""<img src="(http://grrlpowercomic.com/comics/[^"]*?)" alt="[^"]*?" title="[^"]*?" class="ishadow40" />"""]]
+comiclist = mrpeabody.readdef("./def")
 
 download_directory = "../comics"
 
