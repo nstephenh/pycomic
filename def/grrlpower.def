@@ -1,0 +1,8 @@
+grrl power
+#Name - Supports comments on individual lines
+http://grrlpowercomic.com/archives/48
+#Start URL
+<a href="(http://grrlpowercomic.com/archives/[^"]*?)" class="navi navi-next" title="Next">Next</a>
+#Regex for next button
+<img src="(http://grrlpowercomic.com/comics/[^"]*?)" alt="[^"]*?" title="[^"]*?" class="ishadow40" />
+#Regex for image
