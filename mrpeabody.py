@@ -8,15 +8,19 @@ def readdef(defdirectory):
 	except:
 		print("Definition Directory already exists")
 	#Reads definition files from the file directory
-	for deffile in os.listdir(defdirectory):
-		readline = None
+	for deffilename in os.listdir(defdirectory):
+		deffile = open(defdirectory +  "/" + deffilename, "r")
+		defline = "string"
 		comicdef = []
-		while readline != "":
-			#reads each line in the file, and writes it to comicdef until the last line is reached"
-			readline = deffile.readline()
-			comicdef = comicdef.append(readline)
+		while defline != "":
+			#reads each line in the file, and writes it to comicdef until the last line is reached
+			#except for the last two characters which are newline
+			defline = deffile.readline()[:-1]
+			print(defline)
+			comicdef.append(str(defline))
 		#writes all but the last (blank) line of comcidef to the comiclist array
-		comiclst.append(comicdef[:-1])
+		comiclist.append(comicdef[:-1])
+	print(comiclist)
 	return comiclist
 		
 		

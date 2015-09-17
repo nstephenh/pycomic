@@ -11,8 +11,6 @@ def fetchpage(url):
 		print("downloading page " + url)
 		return str(urllib.request.urlopen(url).read())
 		
-		#The following is for testing purposes only
-		#return """<a href="content/nextpage/example.test" class="navi navi-next" title="Next">Next</a>"""
 
 	except urllib.error.URLError as e:
 		print(e)
