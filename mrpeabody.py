@@ -11,18 +11,30 @@ def readdef(defdirectory):
 	for deffilename in os.listdir(defdirectory):
 		deffile = open(defdirectory +  "/" + deffilename, "r")
 		defline = ""
+		
+		#list of the different things in a definition file
+		deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir" ]
+		
+		#create and populate comicdef with placeholder values
 		comicdef = []
+		for item in deflist:
+			comicdef.append( "#" + item)
 		while True:
-			#reads each line in the file, and writes it to comicdef until the last line is reached
+			#reads each line in the file, and writes it to comicdef 
+			#until the last line is reached
 			#except for the last two characters which are newline
 			defline = deffile.readline()[:-1]
 			print(defline)
-			#Support for commented definition files
+			
+			#Process the definition file
 			if defline == "":
 				break
-			elif defline[0] != "#":
-				comicdef.append(str(defline))
-		if len(comicdef) != 5:
-			comicdef.append("")
+			else:
+				for item in deflist:
+					if defline[ : len(item)] == item:
+						position = comicdef.index("#" + item)
+						comicdef.remove("#" + item)
+						comicdef.insert(position, defline[len(item)+1 : ])
+			print(comicdef) 
 		comiclist.append(comicdef)
 	return comiclist
