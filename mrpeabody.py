@@ -38,3 +38,15 @@ def readdef(defdirectory):
 			print(comicdef) 
 		comiclist.append(comicdef)
 	return comiclist
+
+def initdir(comiclist, downloaddirectory):
+	try:
+		os.mkdir(downloaddirectory)
+	except:
+		print("Download Directory already exists")
+	for comic in comiclist:
+		try:
+			os.mkdir(downloaddirectory + "/" + comic[0])
+		except:
+			print("Directory already exists for" + comic[0])
+
