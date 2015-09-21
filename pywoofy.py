@@ -8,7 +8,7 @@ import os
 
 keeprunning = 1
 
-# comic name, starturl, nextlinkregex, imgregex
+#Reads comic definitions from definition files in def directory
 comiclist = mrpeabody.readdef("./def")
 
 download_directory = "../comics"
