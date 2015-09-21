@@ -12,6 +12,7 @@ keeprunning = 1
 comiclist = mrpeabody.readdef("./def")
 
 download_directory = "../comics"
+mrpeabody.initdir(comiclist, download_directory)
 
 while keeprunning == 1:
 	for comicdef in comiclist:
