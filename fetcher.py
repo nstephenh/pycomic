@@ -49,6 +49,7 @@ def fetchcomic(comicdef, download_directory):
 		
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
+
 	print("Finished downloading " + comicdef[0])
 	return current_page_url
 

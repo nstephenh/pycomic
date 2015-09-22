@@ -10,9 +10,7 @@ keeprunning = 1
 
 #Reads comic definitions from definition files in def directory
 download_directory = "../comics"
-mrpeabody.initdb("../comics")
-
-comiclist = 
+comiclist = mrpeabody.initdb("../comics")
 
 mrpeabody.initdir(comiclist, download_directory)
 
@@ -23,5 +21,5 @@ while keeprunning == 1:
 	for comicdef in comiclist:
 		#Download the current comic
 		fetcher.fetchcomic(comicdef,download_directory)
-		
+	
 	keeprunning = 0

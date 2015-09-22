@@ -52,11 +52,12 @@ def initdir(comiclist, downloaddirectory):
 			print("Directory already exists for" + comic[0])
 def initdb(downloaddir):
 	try:
-		db = open(downloaddir + "/.database", "xb")
-		db = open(downloaddir + "/.database", "b")
+		db = open(downloaddir + "/.database", "x")
+		db = open(downloaddir + "/.database", "w")
 		json.dump(readdef("./def"), db)
 	except:
 		print("Database already exists")
-		db = open(downloaddir + "/.database", "+b")
-		
+	db = open(downloaddir + "/.database", "r")
+	return json.load(db)	
 def updatedb(comicname, newdef):
+	db = open(downloaddir + "/.database", "w")
