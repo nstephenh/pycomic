@@ -2,7 +2,7 @@
 import os
 import json
 
-def readdef(defdirectory):
+def initdef(defdirectory):
 	comiclist =[]
 	try:
 		os.mkdir(defdirectory)
@@ -10,36 +10,35 @@ def readdef(defdirectory):
 		print("Definition Directory already exists")
 	#Reads definition files from the file directory
 	for deffilename in os.listdir(defdirectory):
-		deffile = open(defdirectory +  "/" + deffilename, "r")
-		defline = ""
-		
-		#list of the different things in a definition file
-		deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir" ]
-		
-		#create and populate comicdef with placeholder values
-		comicdef = []
-		for item in deflist:
-			comicdef.append( "#" + item)
-		while True:
-			#reads each line in the file, and writes it to comicdef 
-			#until the last line is reached
-			#except for the last two characters which are newline
-			defline = deffile.readline()[:-1]
-			print(defline)
-			
-			#Process the definition file
-			if defline == "":
-				break
-			else:
-				for item in deflist:
-					if defline[ : len(item)] == item:
-						position = comicdef.index("#" + item)
-						comicdef.remove("#" + item)
-						comicdef.insert(position, defline[len(item)+1 : ])
-			print(comicdef) 
-		comiclist.append(comicdef)
+		comiclist.append(readdef())
 	return comiclist
+def readdef(deffilename):
+	deffile = open(defdirectory +  "/" + deffilename, "r")
+	defline = ""
+	#list of the different things in a definition file
+	deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir" ]
 
+	#create and populate comicdef with placeholder values
+	comicdef = []
+	for item in deflist:
+			comicdef.append( "#" + item)
+	while True:
+		#reads each line in the file, and writes it to comicdef 
+		#until the last line is reached
+		#except for the last two characters which are newline
+		defline = deffile.readline()[:-1]
+		#Process the definition file
+		if defline == "":
+			break
+		else:
+			for item in deflist:
+				if defline[ : len(item)] == item:
+					position = comicdef.index("#" + item)
+					comicdef.remove("#" + item)
+					comicdef.insert(position, defline[len(item)+1 : ])
+	print(comicdef)
+	return comicdef		
+		
 def initdir(comiclist, downloaddirectory):
 	try:
 		os.mkdir(downloaddirectory)
@@ -54,7 +53,7 @@ def initdb(downloaddir):
 	try:
 		db = open(downloaddir + "/.database", "x")
 		db = open(downloaddir + "/.database", "w")
-		json.dump(readdef("./def"), db)
+		json.dump(initdef("./def"), db)
 	except:
 		print("Database already exists")
 	db = open(downloaddir + "/.database", "r")
