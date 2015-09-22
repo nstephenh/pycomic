@@ -9,12 +9,19 @@ import os
 keeprunning = 1
 
 #Reads comic definitions from definition files in def directory
-comiclist = mrpeabody.readdef("./def")
-
 download_directory = "../comics"
+mrpeabody.initdb("../comics")
+
+comiclist = 
+
 mrpeabody.initdir(comiclist, download_directory)
+
+#Interpret Call arguments
+
 
 while keeprunning == 1:
 	for comicdef in comiclist:
+		#Download the current comic
 		fetcher.fetchcomic(comicdef,download_directory)
+		
 	keeprunning = 0

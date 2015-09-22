@@ -1,5 +1,6 @@
 #Named after Mr Peabody from Peabody and Sherman
 import os
+import json
 
 def readdef(defdirectory):
 	comiclist =[]
@@ -49,4 +50,13 @@ def initdir(comiclist, downloaddirectory):
 			os.mkdir(downloaddirectory + "/" + comic[0])
 		except:
 			print("Directory already exists for" + comic[0])
-
+def initdb(downloaddir):
+	try:
+		db = open(downloaddir + "/.database", "xb")
+		db = open(downloaddir + "/.database", "b")
+		json.dump(readdef("./def"), db)
+	except:
+		print("Database already exists")
+		db = open(downloaddir + "/.database", "+b")
+		
+def updatedb(comicname, newdef):
