@@ -1,0 +1,6 @@
+comicname Order of the Stick
+starturl http://www.giantitp.com/comics/oots0001.html
+nextregex <A href="([^"]*?)"><IMG src="[^"]*?" alt="Next Comic" title="Next Comic" border="0"></A>
+imageregex <TD align="center"><IMG src="([^"]*?)">
+
+
