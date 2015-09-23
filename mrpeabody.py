@@ -10,10 +10,10 @@ def initdef(defdirectory):
 		print("Definition Directory already exists")
 	#Reads definition files from the file directory
 	for deffilename in os.listdir(defdirectory):
-		comiclist.append(readdef())
+		comiclist.append(readdef(defdirectory + "/" + deffilename))
 	return comiclist
-def readdef(deffilename):
-	deffile = open(defdirectory +  "/" + deffilename, "r")
+def readdef(deffilepath):
+	deffile = open(deffilepath, "r")
 	defline = ""
 	#list of the different things in a definition file
 	deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir" ]
@@ -40,23 +40,43 @@ def readdef(deffilename):
 	return comicdef		
 		
 def initdir(comiclist, downloaddirectory):
-	try:
-		os.mkdir(downloaddirectory)
-	except:
-		print("Download Directory already exists")
 	for comic in comiclist:
 		try:
 			os.mkdir(downloaddirectory + "/" + comic[0])
 		except:
 			print("Directory already exists for" + comic[0])
 def initdb(downloaddir):
+	'''
+	Precondition: download directory is a directory that exists
+	This function will create a json database file and populate it with information 
+		from the .def files in the def directory
+	Returns: Comiclist
+	'''
+	try:
+		os.mkdir(downloaddir)
+	except:
+		print("Download Directory already exists")
 	try:
 		db = open(downloaddir + "/.database", "x")
 		db = open(downloaddir + "/.database", "w")
 		json.dump(initdef("./def"), db)
 	except:
 		print("Database already exists")
+		db = open(downloaddir + "/.database", "w+")
+		#Update the database with new def files here
+		newdb = initdef("./def")
+		olddb = json.load(db)
+		for newcomicdef in newdb:
+			notit = len(olddb)
+			for oldcomicdef in olddb:
+				if oldcomicdef[0] != newcomicdef[0]:
+					notit = notit -1
+			if notit == 0:		
+				olddb.append(newcomicdef())
+		json.dump(olddb, db) 
 	db = open(downloaddir + "/.database", "r")
-	return json.load(db)	
+	return json.load(db)
+	
+	
 def updatedb(comicname, newdef):
 	db = open(downloaddir + "/.database", "w")
