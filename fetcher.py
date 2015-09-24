@@ -6,10 +6,13 @@ import time
 import cracker
 import mrpeabody
 
+notarobotheader = {'User-Agent': 'Mozilla/5.0'}
+
 def fetchpage(url):
+	req = urllib.request.Request(url, headers=notarobotheader)
 	try:
 		print("downloading page " + url)
-		return str(urllib.request.urlopen(url).read())
+		return str(urllib.request.urlopen(req).read())
 		
 
 	except urllib.error.URLError as e:
@@ -50,8 +53,12 @@ def fetchcomic(comicdef, download_directory):
 			downloadfilename = img_url.split("/")[-1]
 		else:
 			downloadfilename = current_page_url.split("/")[-1]
-		urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
+		
+		#urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
 
+		filetosave = open(downloadcomicdir + downloadfilename, "wb")
+		
+		filetosave.write(urllib.request.urlopen(urllib.request.Request(img_url, headers=notarobotheader)))
 	
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
