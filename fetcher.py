@@ -4,7 +4,7 @@ import urllib.request
 import time
 
 import cracker
-
+import mrpeabody
 
 def fetchpage(url):
 	try:
@@ -52,10 +52,12 @@ def fetchcomic(comicdef, download_directory):
 			downloadfilename = current_page_url.split("/")[-1]
 		urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
 
-		
+	
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
-
+		#update the database to reflect the next page
+		comicdef[1] = current_page_url
+		mrpeabody.updatedb(comicdef, download_directory)
 	print("Finished downloading " + comicdef[0])
 	return current_page_url
 

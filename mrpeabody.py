@@ -82,12 +82,12 @@ def initdb(downloaddir):
 	return json.load(db)
 	
 	
-def updatedb(comicname, newdef, downloaddir):
+def updatedb(newdef, downloaddir):
 	db = open(downloaddir + "/.database", "r")
 	comiclist = json.load(db)
-	for comicdef in olddb:
-		if comicname == comicdef[0]:
-			index = olddb.index(comicdef)
+	for comicdef in comiclist:
+		if newdef[0] == comicdef[0]:
+			index = comiclist.index(comicdef)
 			comiclist.remove(comicdef)
 			comiclist.insert(index, newdef)
 			break
