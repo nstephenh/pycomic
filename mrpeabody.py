@@ -71,7 +71,7 @@ def initdb(downloaddir):
 				if oldcomicdef[0] != newcomicdef[0]:
 					notit = notit -1
 			if notit == 0:		
-				olddb.append(newcomicdef())
+				olddb.append(newcomicdef)
 			
 		print("finished updating the database")
 		print(olddb)
