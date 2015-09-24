@@ -1,0 +1,6 @@
+comicname Questionable Content
+starturl http://www.questionablecontent.net/view.php?comic=1
+nextregex <a href="([^"]*?)">Next</a>
+imageregex <img id="strip" src="([^"]*?)">
+rootcomicdir http://www.questionablecontent.net/
+
