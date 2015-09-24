@@ -44,7 +44,13 @@ def fetchcomic(comicdef, download_directory):
 			print("No image found")
 			break
 		print("downloading image " + img_url)
-		urllib.request.urlretrieve(img_url, download_directory +"/" +  comicdef[0] + "/" + img_url.split("/")[-1])
+
+		downloadcomicdir = download_directory + "/" + comicdef[0] + "/"
+		if comicdef[5] != "#useurlflag":
+			downloadfilename = img_url.split("/")[-1]
+		else:
+			downloadfilename = current_page_url.split("/")[-1]
+		urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
 
 		
 		#fetch the next page

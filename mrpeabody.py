@@ -16,7 +16,7 @@ def readdef(deffilepath):
 	deffile = open(deffilepath, "r")
 	defline = ""
 	#list of the different things in a definition file
-	deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir" ]
+	deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag" ]
 
 	#create and populate comicdef with placeholder values
 	comicdef = []
