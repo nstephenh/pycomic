@@ -36,7 +36,6 @@ def readdef(deffilepath):
 					position = comicdef.index("#" + item)
 					comicdef.remove("#" + item)
 					comicdef.insert(position, defline[len(item)+1 : ])
-	print(comicdef)
 	return comicdef		
 		
 def initdir(comiclist, downloaddirectory):
@@ -62,7 +61,7 @@ def initdb(downloaddir):
 		json.dump(initdef("./def"), db)
 	except:
 		print("Database already exists")
-		db = open(downloaddir + "/.database", "w+")
+		db = open(downloaddir + "/.database", "r")
 		#Update the database with new def files here
 		newdb = initdef("./def")
 		olddb = json.load(db)
@@ -73,6 +72,11 @@ def initdb(downloaddir):
 					notit = notit -1
 			if notit == 0:		
 				olddb.append(newcomicdef())
+			
+		print("finished updating the database")
+		print(olddb)
+		#Update the database with new def files here
+		db = open(downloaddir + "/.database", "w")
 		json.dump(olddb, db) 
 	db = open(downloaddir + "/.database", "r")
 	return json.load(db)
