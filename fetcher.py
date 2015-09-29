@@ -64,8 +64,10 @@ def fetchcomic(comicdef, download_directory):
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
 		#update the database to reflect the next page
-		comicdef[1] = current_page_url
-		mrpeabody.updatedb(comicdef, download_directory)
+		if current_page_url != None:
+			comicdef[1] = current_page_url
+			mrpeabody.updatedb(comicdef, download_directory)
+		
 	print("Finished downloading " + comicdef[0])
 	return current_page_url
 
