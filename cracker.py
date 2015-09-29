@@ -19,7 +19,11 @@ def findurl(pagefeed, elementregex, siteurl):
 		if siteurl == "#rootcomicdir":
 			print ("Error, comic requires rootcomicdir and none specified")
 		else:
-			return (siteurl + element.split("./")[1])
+			try:
+				return (siteurl + element.split("./")[1])
+			except IndexError: #If the url doesn't contain "./" then we don't need to include that
+				return (siteurl + element)
+				
 	elif element != None:
 		return element
 	else:

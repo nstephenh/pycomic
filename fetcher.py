@@ -58,7 +58,8 @@ def fetchcomic(comicdef, download_directory):
 
 		filetosave = open(downloadcomicdir + downloadfilename, "wb")
 		
-		filetosave.write(urllib.request.urlopen(urllib.request.Request(img_url, headers=notarobotheader)))
+		filetosave.write(urllib.request.urlopen(urllib.request.Request(img_url, headers=notarobotheader)).read())
+		filetosave.close()
 	
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
