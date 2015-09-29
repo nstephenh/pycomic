@@ -4,7 +4,7 @@ A webcomic downloaded written in python.
 
 Feel free to add a webcomic in the issue tracker
 
-How to use:
+##How to use:
 
   Download or clone the repository to wherever you want to store the comics
   
@@ -14,7 +14,7 @@ How to use:
   
   Pywooy.py will create a directory in the same directory as the pywoofy folder. It will contain a hidden database file, and a folder for each comic
   
-Creating a definiton file
+##Creating a definiton file:
 
   All definition files have the folling elements:
   
@@ -36,7 +36,7 @@ Creating a definiton file
   
   These definiton files support comments. Any line that starts with # wil not be processed.
   
-  Here is an example definition file
+  Here is an example definition file:
   
     comicname El Goonish Shive
     
@@ -48,5 +48,5 @@ Creating a definiton file
     
     rootcomicdir http://www.egscomics.com/
     
-  Notice how useurlflag is not included.
+  Notice how useurlflag is not included, as it is not necessary.
   
