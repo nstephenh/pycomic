@@ -1,8 +1,12 @@
 # pywoofy
 
-A webcomic downloaded written in python.
+A webcomic downloaded written in Python 3.
 
-Feel free to add a webcomic in the issue tracker
+Requirements:
+
+Python 3
+
+Feel free to add a webcomic in the issue tracker.
 
 ##How to use:
 
