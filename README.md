@@ -1,6 +1,6 @@
 # pywoofy
 
-A webcomic downloaded written in Python 3.
+A webcomic downloader written in Python 3.
 
 Requirements:
 
