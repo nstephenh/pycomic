@@ -4,7 +4,6 @@ import re
 
 def findelement(pagefeed, elementregex):
 	regex = re.compile(elementregex)
-	print("searching for " + elementregex)
 	results =regex.search(pagefeed)
 	if results != None:
 		#returns if the item exists, replacing spaces with %20
