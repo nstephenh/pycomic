@@ -4,9 +4,9 @@ import fetcher
 import cracker
 import mrpeabody
 
-import os
+import sys
+import threading
 
-keeprunning = 1
 
 #Reads comic definitions from definition files in def directory
 download_directory = "../comics"
@@ -14,12 +14,13 @@ comiclist = mrpeabody.initdb(download_directory)
 
 mrpeabody.initdir(comiclist, download_directory)
 
-#Interpret Call arguments
 
+for comicdef in comiclist:
+	#Download the current comic
+	thread = threading.Thread(target = fetcher.fetchcomic,args= (comicdef, download_directory), name= comicdef[0] )
+	thread.start()
 
-while keeprunning == 1:
-	for comicdef in comiclist:
-		#Download the current comic
-		fetcher.fetchcomic(comicdef,download_directory)
-	
-	keeprunning = 0
+while threading.active_count() > 0:
+	pass
+print("Finished downloading all pages of all comics")
+
