@@ -11,7 +11,6 @@ notarobotheader = {'User-Agent': 'Mozilla/5.0'}
 def fetchpage(url):
 	req = urllib.request.Request(url, headers=notarobotheader)
 	try:
-		print("downloading page " + url)
 		return str(urllib.request.urlopen(req).read())
 		
 
@@ -19,13 +18,13 @@ def fetchpage(url):
 		print(e)
 		return None
 def fetchpageretry(url):
-	for i in range (10):
+	for i in range (100):
 		pagefeed = fetchpage(url)
 		if pagefeed != None:
 			return pagefeed
 		else:
-			print("Download failed on try %d, retrying" % i)
-			time.sleep((i))
+			print("Download of page" + url + " failed on try %d, retrying" % i)
+			time.sleep((5*(i+1)))
 	return None 
 
 def fetchcomic(comicdef, download_directory):
@@ -46,21 +45,29 @@ def fetchcomic(comicdef, download_directory):
 		if img_url == None:
 			print("No image found")
 			break
-		print("downloading image " + img_url)
 
 		downloadcomicdir = download_directory + "/" + comicdef[0] + "/"
 		if comicdef[5] != "#useurlflag":
-			downloadfilename = img_url.split("/")[-1]
+			downloadfilename = current_page_url.split("/")[-1]
+			try:
+				downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
+			except:
+				pass
+			try:
+				downloadfilename = downloadfilename.split("=")[-1]
+			except:
+				pass
 		else:
 			downloadfilename = current_page_url.split("/")[-1]
 		
 		#urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
-
+		print("Downloading " + img_url + " as " + downloadfilename)
 		filetosave = open(downloadcomicdir + downloadfilename, "wb")
 		
 		filetosave.write(urllib.request.urlopen(urllib.request.Request(img_url, headers=notarobotheader)).read())
 		filetosave.close()
 	
+		
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
 		#update the database to reflect the next page
