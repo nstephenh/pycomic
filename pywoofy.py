@@ -12,9 +12,6 @@ import threading
 download_directory = "../comics"
 comiclist = mrpeabody.initdb(download_directory)
 
-mrpeabody.initdir(comiclist, download_directory)
-
-
 for comicdef in comiclist:
 	#Download the current comic
 	thread = threading.Thread(target = fetcher.fetchcomic,args= (comicdef, download_directory), name= comicdef[0] )

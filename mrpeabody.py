@@ -1,6 +1,8 @@
 #Named after Mr Peabody from Peabody and Sherman
 import os
-import json
+import sqlite3
+
+deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag" ]
 
 def initdef(defdirectory):
 	comiclist =[]
@@ -16,7 +18,6 @@ def readdef(deffilepath):
 	deffile = open(deffilepath, "r")
 	defline = ""
 	#list of the different things in a definition file
-	deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag" ]
 
 	#create and populate comicdef with placeholder values
 	comicdef = []
@@ -38,58 +39,35 @@ def readdef(deffilepath):
 					comicdef.insert(position, defline[len(item)+1 : ])
 	return comicdef		
 		
-def initdir(comiclist, downloaddirectory):
-	for comic in comiclist:
-		try:
-			os.mkdir(downloaddirectory + "/" + comic[0])
-		except:
-			print("Directory already exists for" + comic[0])
 def initdb(downloaddir):
 	'''
 	Precondition: download directory is a directory that exists
 	This function will create a json database file and populate it with information 
 		from the .def files in the def directory
-	Returns: Comiclist
+	Returns: a list of all comics
 	'''
 	try:
 		os.mkdir(downloaddir)
 	except:
 		print("Download Directory already exists")
-	try:
-		db = open(downloaddir + "/.database", "x")
-		db = open(downloaddir + "/.database", "w")
-		json.dump(initdef("./def"), db)
-	except:
-		print("Database already exists")
-		db = open(downloaddir + "/.database", "r")
-		#Update the database with new def files here
-		newdb = initdef("./def")
-		olddb = json.load(db)
-		for newcomicdef in newdb:
-			notit = len(olddb)
-			for oldcomicdef in olddb:
-				if oldcomicdef[0] != newcomicdef[0]:
-					notit = notit -1
-			if notit == 0:		
-				olddb.append(newcomicdef)
-			
-		print("finished updating the database")
-		print(olddb)
-		#Update the database with new def files here
-		db = open(downloaddir + "/.database", "w")
-		json.dump(olddb, db) 
-	db = open(downloaddir + "/.database", "r")
-	return json.load(db)
-	
+	initdb = initdef("./def")
+	comiclist = []
+	for comicdef in initdbdb:
+		try:
+			os.mkdir(downloaddir + "/" + comicdef[0])
+		except: 
+			print("Directory already exists for " + comicdef[0])
+		try:
+			# if the database file already exists, 
+			open(downloaddir + "/" + comicdef[0], "x")
+			print("Database file for " + comicdef[0] + " does not exist, creating database")
+			db = sqlite3.connect(downloaddir + "/" + comicdef[0])
+			db.execute("CREATE TABLE comicdef (comicname text , starturl text, nextregex text, imageregex text, rootcomicdir text, useurlflag text)") #Make this based off of deflist
+		except:
+			db = sqlite3.connect(downloaddir + "/" + comicdef[0])
+			db.execute # Make this read based off of deflist
+		comiclist.append(comicdef[0])
+	return comiclist
 	
 def updatedb(newdef, downloaddir):
-	db = open(downloaddir + "/.database", "r")
-	comiclist = json.load(db)
-	for comicdef in comiclist:
-		if newdef[0] == comicdef[0]:
-			index = comiclist.index(comicdef)
-			comiclist.remove(comicdef)
-			comiclist.insert(index, newdef)
-			break
-	db = open(downloaddir + "/.database", "w")
-	json.dump(comiclist, db)	
+	pass	
