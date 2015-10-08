@@ -39,7 +39,7 @@ def readdef(deffilepath):
 					comicdef.insert(position, defline[len(item)+1 : ])
 	return comicdef		
 		
-def initdb(downloaddir):
+def initdb(downloaddir, arg1, arg2):
 	'''
 	Precondition: download directory is a directory that exists
 	This function will create a json database file and populate it with information 
@@ -52,20 +52,26 @@ def initdb(downloaddir):
 		print("Download Directory already exists")
 	initdb = initdef("./def")
 	comiclist = []
-	for comicdef in initdbdb:
+	for comicdef in initdb:
 		try:
 			os.mkdir(downloaddir + "/" + comicdef[0])
 		except: 
 			print("Directory already exists for " + comicdef[0])
 		try:
 			# if the database file already exists, 
-			open(downloaddir + "/" + comicdef[0], "x")
+			open(downloaddir + "/" + comicdef[0] + "/." +  comicdef[0], "x")
 			print("Database file for " + comicdef[0] + " does not exist, creating database")
-			db = sqlite3.connect(downloaddir + "/" + comicdef[0])
+			conn = sqlite3.connect(downloaddir + "/" + comicdef[0] + "/." + comicdef[0])
+			db = conn.cursor()
 			db.execute("CREATE TABLE comicdef (comicname text , starturl text, nextregex text, imageregex text, rootcomicdir text, useurlflag text)") #Make this based off of deflist
-		except:
-			db = sqlite3.connect(downloaddir + "/" + comicdef[0])
-			db.execute # Make this read based off of deflist
+			conn.commit()
+			conn.close()
+		except:	
+			conn = sqlite3.connect(downloaddir + "/" + comicdef[0] + "/." + comicdef[0])
+			db = conn.cursor()
+			db.execute("SELECT * FROM comicdef")
+			comicdef = db.fetchone()
+			conn.close() 	
 		comiclist.append(comicdef[0])
 	return comiclist
 	
