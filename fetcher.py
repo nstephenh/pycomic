@@ -27,11 +27,14 @@ def fetchpageretry(url):
 			time.sleep((5*(i+1)))
 	return None 
 
-def fetchcomic(comicdef, download_directory):
+def fetchcomic(comic, download_directory):
 	""" 
-	Precondition: 	comicdef is a list containing [name, startpage, nextregex, imgregex] 
-			download_directory is a string 	
+	Precondition: comic is the name of the comic, download_directory is a where all comics will be downloaded	
 	"""
+
+	#Read the database to get the definition
+	comicdef = mrpeabody.readdb(comic, download_directory)	
+
 	#Sets the first page to be the start page
 	current_page_url = comicdef[1]
 

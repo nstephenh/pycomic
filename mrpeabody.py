@@ -53,27 +53,41 @@ def initdb(downloaddir, arg1, arg2):
 	initdb = initdef("./def")
 	comiclist = []
 	for comicdef in initdb:
+		print(comicdef[0])
+		filepath = downloaddir + "/" + comicdef[0] + "/." + "".join(comicdef[0].split())
 		try:
 			os.mkdir(downloaddir + "/" + comicdef[0])
 		except: 
 			print("Directory already exists for " + comicdef[0])
 		try:
 			# if the database file already exists, 
-			open(downloaddir + "/" + comicdef[0] + "/." +  comicdef[0], "x")
+			open(filepath, "x")
 			print("Database file for " + comicdef[0] + " does not exist, creating database")
-			conn = sqlite3.connect(downloaddir + "/" + comicdef[0] + "/." + comicdef[0])
+			conn = sqlite3.connect(filepath)
 			db = conn.cursor()
-			db.execute("CREATE TABLE comicdef (comicname text , starturl text, nextregex text, imageregex text, rootcomicdir text, useurlflag text)") #Make this based off of deflist
+			db.execute("CREATE TABLE comicdef (" + (" text, ".join(deflist) + " text")+ ")") 
+			Print(db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?)", comicdef)) #INSERT THE VALUES
 			conn.commit()
 			conn.close()
-		except:	
-			conn = sqlite3.connect(downloaddir + "/" + comicdef[0] + "/." + comicdef[0])
+		except Exception as e:
+			print(e)		
+			conn = sqlite3.connect(filepath)
 			db = conn.cursor()
-			db.execute("SELECT * FROM comicdef")
+			db.execute("SELECT ? FROM comicdef", (comicdef[0],))
 			comicdef = db.fetchone()
-			conn.close() 	
+			conn.close()
 		comiclist.append(comicdef[0])
 	return comiclist
 	
-def updatedb(newdef, downloaddir):
-	pass	
+def updatedb(item, comic, downloaddir):
+	filepath = downloaddir + "/" + comic + "/." + "".join(comic.split())
+	conn = sqlite3.connect(filepath)
+	db = conn.cursor()
+	db.execute("update comicdef ", item)
+	db
+def readdb(comic, downloaddir):
+	#reads a specific comic database, and returns the definition from that database
+	conn = sqlite3.connect()#use filepath here!!!
+	db = conn.cursor()
+	db.execute("Select ? FROM comicdef", (comic,))
+	return db.fetchone()	

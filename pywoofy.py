@@ -18,9 +18,9 @@ except:
 download_directory = "../comics"
 comiclist = mrpeabody.initdb(download_directory, arg1, arg2)
 
-for comicdef in comiclist:
+for comic in comiclist:
 	#Download the current comic
-	thread = threading.Thread(target = fetcher.fetchcomic,args= (comicdef, download_directory), name= comicdef[0] )
+	thread = threading.Thread(target = fetcher.fetchcomic,args= (comic, download_directory), name = comic )
 	thread.start()
 
 while threading.active_count() > 0:
