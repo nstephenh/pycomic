@@ -33,8 +33,8 @@ def fetchcomic(comic, download_directory):
 	"""
 
 	#Read the database to get the definition
-	comicdef = mrpeabody.readdb(comic, download_directory)	
-
+	comicdef = mrpeabody.readdb(comic, download_directory)
+	print(comicdef)
 	#Sets the first page to be the start page
 	current_page_url = comicdef[1]
 
@@ -76,8 +76,8 @@ def fetchcomic(comic, download_directory):
 		#update the database to reflect the next page
 		if current_page_url != None:
 			comicdef[1] = current_page_url
-			mrpeabody.updatedb(comicdef, download_directory)
+			mrpeabody.updatedb("starturl", current_page_url, comic, download_directory)
 		
-	print("Finished downloading " + comicdef[0])
+	print("Finished downloading " + comic)
 	return current_page_url
 

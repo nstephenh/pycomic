@@ -69,8 +69,7 @@ def initdb(downloaddir, arg1, arg2):
 			db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?)", comicdef) #INSERT THE VALUES
 			conn.commit()
 			conn.close()
-		except Exception as e:
-			print(e)		
+		except Exception as e:	
 			conn = sqlite3.connect(filepath)
 			db = conn.cursor()
 			db.execute("SELECT ? FROM comicdef", (comicdef[0],))
@@ -79,12 +78,13 @@ def initdb(downloaddir, arg1, arg2):
 		comiclist.append(comicdef[0])
 	return comiclist
 	
-def updatedb(item, comic, downloaddir):
+def updatedb(item, value,  comic, downloaddir):
 	filepath = downloaddir + "/" + comic + "/." + "".join(comic.split())
 	conn = sqlite3.connect(filepath)
 	db = conn.cursor()
-	db.execute("update comicdef ", item)
-	db
+	db.execute("update comicdef SET " +item + "=?", (value,))
+	conn.commit()
+	conn.close()
 def readdb(comic, downloaddir):
 	'''Reads the database and returns the definition as a list
 	'''
@@ -92,5 +92,5 @@ def readdb(comic, downloaddir):
 	filepath = downloaddir + "/" + comic + "/." + "".join(comic.split())
 	conn = sqlite3.connect(filepath)#use filepath here!!!
 	db = conn.cursor()
-	db.execute("Select ? FROM comicdef", (comic,))
-	return db.fetchone()	
+	db.execute("SELECT * FROM comicdef")
+	return list(db.fetchall()[0])
