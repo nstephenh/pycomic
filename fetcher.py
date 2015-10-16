@@ -61,7 +61,7 @@ def fetchcomic(comic, download_directory):
 			except:
 				pass
 		else:
-			downloadfilename = current_page_url.split("/")[-1]
+			downloadfilename = img_url.split("/")[-1]
 		
 		#urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
 		print("Downloading " + img_url + " as " + downloadfilename)
