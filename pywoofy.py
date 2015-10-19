@@ -23,7 +23,6 @@ for comic in comiclist:
 	thread = threading.Thread(target = fetcher.fetchcomic,args= (comic, download_directory), name = comic )
 	thread.start()
 
-while threading.active_count() > 0:
-	pass
-print("Finished downloading all pages of all comics")
+
+#print("Finished downloading all pages of all comics")
 
