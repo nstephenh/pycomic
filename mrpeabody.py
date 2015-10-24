@@ -2,7 +2,7 @@
 import os
 import sqlite3
 
-deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag" ]
+deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag", "autonumber" ]
 
 def initdef(defdirectory):
 	comiclist =[]
@@ -20,9 +20,9 @@ def readdef(deffilepath):
 	#list of the different things in a definition file
 
 	#create and populate comicdef with placeholder values
-	comicdef = []
+	comicdef = {}
 	for item in deflist:
-			comicdef.append( "#" + item)
+			comicdef[item] = "#" + item
 	while True:
 		#reads each line in the file, and writes it to comicdef 
 		#until the last line is reached
@@ -34,9 +34,7 @@ def readdef(deffilepath):
 		else:
 			for item in deflist:
 				if defline[ : len(item)] == item:
-					position = comicdef.index("#" + item)
-					comicdef.remove("#" + item)
-					comicdef.insert(position, defline[len(item)+1 : ])
+					comicdef[item] = defline[len(item)+1 : ]
 	return comicdef		
 		
 def initdb(downloaddir, arg1, arg2):
@@ -53,29 +51,29 @@ def initdb(downloaddir, arg1, arg2):
 	initdb = initdef("./def")
 	comiclist = []
 	for comicdef in initdb:
-		print(comicdef[0])
-		filepath = downloaddir + "/" + comicdef[0] + "/." + "".join(comicdef[0].split())
+		print(comicdef["comicname"])
+		filepath = downloaddir + "/" + comicdef["comicname"] + "/." + "".join(comicdef["comicname"].split())
 		try:
-			os.mkdir(downloaddir + "/" + comicdef[0])
+			os.mkdir(downloaddir + "/" + comicdef["comicname"])
 		except: 
-			print("Directory already exists for " + comicdef[0])
+			print("Directory already exists for " + comicdef["comicname"])
 		try:
 			# if the database file already exists, 
 			open(filepath, "x")
-			print("Database file for " + comicdef[0] + " does not exist, creating database")
+			print("Database file for " + comicdef["comicname"] + " does not exist, creating database")
 			conn = sqlite3.connect(filepath)
 			db = conn.cursor()
 			db.execute("CREATE TABLE comicdef (" + (" text, ".join(deflist) + " text")+ ")") 
-			db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?)", comicdef) #INSERT THE VALUES
+			exportlist = []
+			for i in deflist:
+				exportlist.append(comicdef[i])
+			db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?,?)", exportlist) #INSERT THE VALUES
 			conn.commit()
 			conn.close()
-		except Exception as e:	
-			conn = sqlite3.connect(filepath)
-			db = conn.cursor()
-			db.execute("SELECT ? FROM comicdef", (comicdef[0],))
-			comicdef = db.fetchone()
-			conn.close()
-		comiclist.append(comicdef[0])
+		except Exception as e:
+			#print(e)
+			pass
+		comiclist.append(comicdef["comicname"])
 	return comiclist
 	
 def updatedb(item, value,  comic, downloaddir):
@@ -93,4 +91,10 @@ def readdb(comic, downloaddir):
 	conn = sqlite3.connect(filepath)#use filepath here!!!
 	db = conn.cursor()
 	db.execute("SELECT * FROM comicdef")
-	return list(db.fetchall()[0])
+	importlist = db.fetchall()[0]
+	comicdef = {}
+	index = 0
+	for i in deflist:
+		comicdef[i] = importlist[index]
+		index +=1
+	return comicdef

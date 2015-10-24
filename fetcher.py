@@ -18,6 +18,9 @@ def fetchpage(url):
 		print(e)
 		return None
 def fetchpageretry(url):
+	""" URL is the url of the page to download
+	This calls the fetchpage function up to 100 times, with an increasing wait between each time
+"""
 	for i in range (100):
 		pagefeed = fetchpage(url)
 		if pagefeed != None:
@@ -34,23 +37,22 @@ def fetchcomic(comic, download_directory):
 
 	#Read the database to get the definition
 	comicdef = mrpeabody.readdb(comic, download_directory)
-	print(comicdef)
 	#Sets the first page to be the start page
-	current_page_url = comicdef[1]
-
+	current_page_url = comicdef["starturl"]
+	autocount = comicdef["autonumber"]
 	#As long as there is a next page to get, get that page
 	while current_page_url != None:
 		#get the current pages contents
 		pagefeed = fetchpageretry(current_page_url)
 		
 		#find and download the image from said page
-		img_url = cracker.findurl(pagefeed, comicdef[3], comicdef[4])
+		img_url = cracker.findurl(pagefeed, comicdef["imageregex"], comicdef["rootcomicdir"])
 		if img_url == None:
 			print("No image found")
 			break
 
-		downloadcomicdir = download_directory + "/" + comicdef[0] + "/"
-		if comicdef[5] != "#useurlflag":
+		downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
+		if comicdef["useurlflag"] != "#useurlflag":
 			downloadfilename = current_page_url.split("/")[-1]
 			try:
 				downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
@@ -72,12 +74,12 @@ def fetchcomic(comic, download_directory):
 	
 		
 		#fetch the next page
-		current_page_url = cracker.findurl(pagefeed, comicdef[2], comicdef[4])
+		current_page_url = cracker.findurl(pagefeed, comicdef["nextregex"], comicdef["rootcomicdir"])
 		#update the database to reflect the next page
 		if current_page_url != None:
-			comicdef[1] = current_page_url
+			comicdef["starturl"] = current_page_url
 			mrpeabody.updatedb("starturl", current_page_url, comic, download_directory)
-		
+			mrpeabody.updatedb("autonumber", autocount, comic, download_directory)
 	print("Finished downloading " + comic)
 	return current_page_url
 
