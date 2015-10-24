@@ -1,4 +1,4 @@
 comicname Dumbing of Age
 starturl http://www.dumbingofage.com/2010/comic/book-1/01-move-in-day/home/
-nextregex <div id="comic-1" class="comicpane"><a href="([^"]*?)" title="[^"]*?"><img src="[^"]*?" alt="[^"]*?" title="[^"]*?"/></a></div>
-imageregex <div id="comic-1" class="comicpane"><a href="[^"]*?" title="[^"]*?"><img src="([^"]*?)" alt="[^"]*?" title="[^"]*?"/></a></div>
+nextregex <div id="comic-1" class="comicpane"><a href="([^"]*?)" title="[^>]*?><img src="[^"]*?" alt="[^>]*?></a></div>
+imageregex <div id="comic-1" class="comicpane"><a href="[^"]*?" title="[^>]*?><img src="([^"]*?)" alt="[^>]*?></a></div>
