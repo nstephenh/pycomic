@@ -39,7 +39,8 @@ def fetchcomic(comic, download_directory):
 	comicdef = mrpeabody.readdb(comic, download_directory)
 	#Sets the first page to be the start page
 	current_page_url = comicdef["starturl"]
-	autocount = comicdef["autonumber"]
+	if comicdef["autonumber"] != "#autonumber":
+		autocount = int(comicdef["autonumber"])
 	#As long as there is a next page to get, get that page
 	while current_page_url != None:
 		#get the current pages contents
@@ -52,7 +53,9 @@ def fetchcomic(comic, download_directory):
 			break
 
 		downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
-		if comicdef["useurlflag"] != "#useurlflag":
+		if comicdef["autonumber"] != "#autonumber":
+			downloadfilename = str(autocount) +"."+ img_url.split(".")[-1]
+		elif comicdef["useurlflag"] != "#useurlflag":
 			downloadfilename = current_page_url.split("/")[-1]
 			try:
 				downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
@@ -79,7 +82,9 @@ def fetchcomic(comic, download_directory):
 		if current_page_url != None:
 			comicdef["starturl"] = current_page_url
 			mrpeabody.updatedb("starturl", current_page_url, comic, download_directory)
-			mrpeabody.updatedb("autonumber", autocount, comic, download_directory)
+			if comicdef["autonumber"] != "#autonumber":
+				autocount +=1
+				mrpeabody.updatedb("autonumber", autocount, comic, download_directory)
 	print("Finished downloading " + comic)
 	return current_page_url
 
