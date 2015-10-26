@@ -12,7 +12,8 @@ def initdef(defdirectory):
 		print("Definition Directory already exists")
 	#Reads definition files from the file directory
 	for deffilename in os.listdir(defdirectory):
-		comiclist.append(readdef(defdirectory + "/" + deffilename))
+		if deffilename.split(".")[-1] == "def":
+			comiclist.append(readdef(defdirectory + "/" + deffilename))
 	return comiclist
 def readdef(deffilepath):
 	deffile = open(deffilepath, "r")
