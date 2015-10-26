@@ -1,0 +1,6 @@
+comicname Gunnerkrigg Court
+starturl http://www.gunnerkrigg.com/?p=1
+nextregex <a class="right" href="([^"]*?)"><img src="http://www.gunnerkrigg.com/images/next_a.jpg"></a>
+imageregex <img class="comic_image" src="([^"]*?)">
+rootcomicdir http://www.gunnerkrigg.com/
+
