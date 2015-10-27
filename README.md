@@ -1,4 +1,4 @@
-# pywoofy
+# pycomic
 
 A webcomic downloader written in Python 3.
 
