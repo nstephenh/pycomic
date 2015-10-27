@@ -56,18 +56,18 @@ def fetchcomic(comic, download_directory):
 		downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
 		#if comicdef["autonumber"] != "#autonumber":
 		downloadfilename = '0'*(8-len(str(autocount)))+ str(autocount) +"."+ img_url.split(".")[-1]
-		if comicdef["useurlflag"] != "#useurlflag":
-			downloadfilename = current_page_url.split("/")[-1]
-			try:
-				downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
-			except:
-				pass
-			try:
-				downloadfilename = downloadfilename.split("=")[-1]
-			except:
-				pass
-		else:
-			downloadfilename = img_url.split("/")[-1]
+		#elif comicdef["useurlflag"] != "#useurlflag":
+		#	downloadfilename = current_page_url.split("/")[-1]
+		#	try:
+		#		downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
+		#	except:
+		#		pass
+		#	try:
+		#		downloadfilename = downloadfilename.split("=")[-1]
+		#	except:
+		#		pass
+		#else:
+		#	downloadfilename = img_url.split("/")[-1]
 		
 		#urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
 		print("Downloading " + img_url + " as " + downloadfilename)
