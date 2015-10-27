@@ -9,7 +9,12 @@ def makecbz(comicname , downloaddir):
 	timedatestamp = str(datetime.datetime.now()).split(".")[0]
 	outputcbz = zipfile.ZipFile(downloaddir + "/" + comicname + " " +timedatestamp + ".cbz", 'w')
 	comicdir = downloaddir + "/" + comicname + "/"
-	for page in os.listdir(comicdir):
+	pagelist = os.listdir(comicdir)
+	try:
+		pagelist.sort()
+	except Exception as e:
+		print(e)
+	for page in pagelist:
 		outputcbz.write(comicdir + page)
 	print("Sucessfully made .cbz for " + comicname)
 
