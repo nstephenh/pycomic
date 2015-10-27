@@ -3,4 +3,3 @@ starturl http://www.egscomics.com/?id=1
 nextregex <a href="([^"]*?)" class="next" rel="next">
 imageregex <img title="[^"]*?" src="([^"]*?)" id="comic" border="0" />
 rootcomicdir http://www.egscomics.com/
-useurlflag
