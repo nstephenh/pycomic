@@ -14,27 +14,25 @@ Feel free to add a webcomic in the issue tracker.
   
   Delete the definition files for comics you do not want, or follow directions to create your own definition file.
   
-  Run pywoofy.py
+  Run pycomic.py
   
-  Pywooy.py will create a directory in the same directory as the pywoofy folder. It will contain a hidden database file, and a folder for each comic
+  pycomic.py will create a directory in the same directory as the pywoofy folder. It will contain a hidden database file in the download folder for each comic.
   
 ##Creating a definiton file:
 
   All definition files have the folling elements:
   
-    comicname
+    comicname : The name of the comic
     
-    starturl
+    starturl : The first page of the comic
     
-    nextregex
+    nextregex : a regular expression dictating the next button in the comic and capturing the next page
     
-    imageregex
+    imageregex : a regular expression dictating the image element and capturing the source
     
   Additionally, some comics have:
   
-    rootcomicdir
-    
-    useurlflag
+    rootcomicdir : this specifies the directory that image files are saved at if its not in the url specified by imageregex
     
   Each of these elements requires the name followed by a single space and then the element in question. The one exception is useurlflag, which is only required to be present and can be followed by anything.
   
