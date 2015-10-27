@@ -5,6 +5,7 @@ import time
 
 import cracker
 import mrpeabody
+import jiminy
 
 notarobotheader = {'User-Agent': 'Mozilla/5.0'}
 
@@ -86,5 +87,5 @@ def fetchcomic(comic, download_directory):
 				autocount +=1
 				mrpeabody.updatedb("autonumber", autocount, comic, download_directory)
 	print("Finished downloading " + comic)
-	return current_page_url
+	jiminy.makecbz(comic, download_directory)
 
