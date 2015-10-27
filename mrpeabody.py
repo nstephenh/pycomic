@@ -36,6 +36,7 @@ def readdef(deffilepath):
 			for item in deflist:
 				if defline[ : len(item)] == item:
 					comicdef[item] = defline[len(item)+1 : ]
+	comicdef['autonumber'] = 1 
 	return comicdef		
 		
 def initdb(downloaddir, arg1, arg2):
