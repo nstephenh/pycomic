@@ -14,7 +14,8 @@ def fetchpage(url):
 	try:
 		return str(urllib.request.urlopen(req).read())
 		
-
+	#except UnicodeDecodeError as e:
+	#	print(e)
 	except urllib.error.URLError as e:
 		print(e)
 		return None
