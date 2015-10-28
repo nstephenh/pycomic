@@ -1,6 +1,5 @@
 #Downloads the html available on the specified page
-import urllib.request
-
+import requests
 import time
 
 import cracker
@@ -10,13 +9,11 @@ import jiminy
 notarobotheader = {'User-Agent': 'Mozilla/5.0'}
 
 def fetchpage(url):
-	req = urllib.request.Request(url, headers=notarobotheader)
 	try:
-		return str(urllib.request.urlopen(req).read())
+		return str(requests.get(url, headers=notarobotheader).text)
 		
-	#except UnicodeDecodeError as e:
-	#	print(e)
-	except urllib.error.URLError as e:
+
+	except Exception as e:
 		print(e)
 		return None
 def fetchpageretry(url):
@@ -74,7 +71,7 @@ def fetchcomic(comic, download_directory):
 		print("Downloading " + img_url + " as " + downloadfilename)
 		filetosave = open(downloadcomicdir + downloadfilename, "wb")
 		
-		filetosave.write(urllib.request.urlopen(urllib.request.Request(img_url, headers=notarobotheader)).read())
+		filetosave.write(requests.get(img_url, headers=notarobotheader).content)
 		filetosave.close()
 	
 		
