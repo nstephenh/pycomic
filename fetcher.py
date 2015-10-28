@@ -10,7 +10,7 @@ notarobotheader = {'User-Agent': 'Mozilla/5.0'}
 
 def fetchpage(url):
 	try:
-		return str(requests.get(url, headers=notarobotheader).text)
+		return str(requests.Session().get(url, headers=notarobotheader).text)
 		
 
 	except Exception as e:
@@ -25,7 +25,7 @@ def fetchpageretry(url):
 		if pagefeed != None:
 			return pagefeed
 		else:
-			print("Download of page" + url + " failed on try %d, retrying" % i)
+			print("Download of page " + url + " failed on try %d, retrying" % i)
 			time.sleep((5*(i+1)))
 	return None 
 
