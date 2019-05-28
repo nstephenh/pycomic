@@ -1,5 +1,5 @@
 comicname El Goonish Shive
 starturl http://www.egscomics.com/?id=1
-nextregex <a href="([^"]*?)" class="next" rel="next">
-imageregex <img title="[^"]*?" src="([^"]*?)" id="comic" border="0" />
+nextregex <a class="cc-next" rel="next" href="([^"]*?)">
+imageregex (http://egscomics.com/comics/.*?.(gif|jpg|png))
 rootcomicdir http://www.egscomics.com/
