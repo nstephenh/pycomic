@@ -2,7 +2,7 @@
 import os
 import sqlite3
 
-deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag", "autonumber" ]
+deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag", "autonumber", "skip" ]
 
 def initdef(defdirectory):
 	comiclist =[]
