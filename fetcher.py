@@ -48,7 +48,7 @@ def fetchcomic(comic, download_directory):
 		#find and download the image from said page
 		img_url = cracker.findurl(pagefeed, comicdef["imageregex"], comicdef["rootcomicdir"])
 		if img_url == None:
-			print("No image found")
+			print("No image found on %s" % current_page_url)
 			break
 
 		downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
