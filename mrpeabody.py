@@ -73,7 +73,7 @@ def initdb(downloaddir, arg1, arg2):
 			conn.commit()
 			conn.close()
 		except Exception as e:
-			#print(e)
+			print(e)
 			pass
 		comiclist.append(comicdef["comicname"])
 	return comiclist
