@@ -76,7 +76,12 @@ def fetchcomic(comic, download_directory):
 	
 		
 		#fetch the next page
-		current_page_url = cracker.findurl(pagefeed, comicdef["nextregex"], comicdef["rootcomicdir"])
+		next_url = cracker.findurl(pagefeed, comicdef["nextregex"], comicdef["rootcomicdir"])
+		if current_page_url == next_url:
+		    current_page_url = None
+		else:
+		    current_page_url = next_url
+
 		#update the database to reflect the next page
 		if current_page_url != None:
 			comicdef["starturl"] = current_page_url
