@@ -45,6 +45,7 @@ def fetchcomic(comic, download_directory):
 		#get the current pages contents
 		pagefeed = fetchpageretry(current_page_url)
 		
+
 		if current_page_url not in comicdef["skip"].split():
 		    #find and download the image from said page
 		    img_url = cracker.findurl(pagefeed, comicdef["imageregex"], comicdef["rootcomicdir"])
