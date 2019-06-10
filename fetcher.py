@@ -45,35 +45,36 @@ def fetchcomic(comic, download_directory):
 		#get the current pages contents
 		pagefeed = fetchpageretry(current_page_url)
 		
-		#find and download the image from said page
-		img_url = cracker.findurl(pagefeed, comicdef["imageregex"], comicdef["rootcomicdir"])
-		if img_url == None:
-			print("No image found")
-			break
+		if current_page_url not in comicdef["skip"].split():
+		    #find and download the image from said page
+		    img_url = cracker.findurl(pagefeed, comicdef["imageregex"], comicdef["rootcomicdir"])
+		    if img_url == None:
+			    print("No image found on %s" % current_page_url)
+			    break
 
-		downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
-		#if comicdef["autonumber"] != "#autonumber":
-		downloadfilename = '0'*(8-len(str(autocount)))+ str(autocount) +"."+ img_url.split(".")[-1]
-		#elif comicdef["useurlflag"] != "#useurlflag":
-		#	downloadfilename = current_page_url.split("/")[-1]
-		#	try:
-		#		downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
-		#	except:
-		#		pass
-		#	try:
-		#		downloadfilename = downloadfilename.split("=")[-1]
-		#	except:
-		#		pass
-		#else:
-		#	downloadfilename = img_url.split("/")[-1]
-		
-		#urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
-		print("Downloading " + img_url + " as " + downloadfilename)
-		filetosave = open(downloadcomicdir + downloadfilename, "wb")
-		
-		filetosave.write(requests.get(img_url, headers=notarobotheader).content)
-		filetosave.close()
-	
+		    downloadcomicdir = download_directory + "/" + comicdef["comicname"] + "/"
+		    #if comicdef["autonumber"] != "#autonumber":
+		    downloadfilename = '0'*(8-len(str(autocount)))+ str(autocount) +"."+ img_url.split(".")[-1]
+		    #elif comicdef["useurlflag"] != "#useurlflag":
+		    #	downloadfilename = current_page_url.split("/")[-1]
+		    #	try:
+		    #		downloadfilename = downloadfilename + "." +  img_url.split(".")[-1]
+		    #	except:
+		    #		pass
+		    #	try:
+		    #		downloadfilename = downloadfilename.split("=")[-1]
+		    #	except:
+		    #		pass
+		    #else:
+		    #	downloadfilename = img_url.split("/")[-1]
+		    
+		    #urllib.request.urlretrieve(img_url, downloadcomicdir + downloadfilename)
+		    print("Downloading " + img_url + " as " + downloadfilename)
+		    filetosave = open(downloadcomicdir + downloadfilename, "wb")
+		    
+		    filetosave.write(requests.get(img_url, headers=notarobotheader).content)
+		    filetosave.close()
+	    
 		
 		#fetch the next page
 		current_page_url = cracker.findurl(pagefeed, comicdef["nextregex"], comicdef["rootcomicdir"])

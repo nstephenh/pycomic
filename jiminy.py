@@ -6,8 +6,7 @@ import datetime
 import zipfile
 import os
 def makecbz(comicname , downloaddir):
-	timedatestamp = str(datetime.datetime.now()).split(".")[0]
-	outputcbz = zipfile.ZipFile(downloaddir + "/" + comicname + " " +timedatestamp + ".cbz", 'w')
+	outputcbz = zipfile.ZipFile(downloaddir + "/" + comicname +".cbz", 'w')
 	comicdir = downloaddir + "/" + comicname + "/"
 	pagelist = os.listdir(comicdir)
 	try:

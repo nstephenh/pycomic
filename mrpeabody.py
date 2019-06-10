@@ -2,7 +2,7 @@
 import os
 import sqlite3
 
-deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag", "autonumber" ]
+deflist = ["comicname" ,"starturl", "nextregex", "imageregex", "rootcomicdir", "useurlflag", "autonumber", "skip"]
 
 def initdef(defdirectory):
 	comiclist =[]
@@ -69,11 +69,11 @@ def initdb(downloaddir, arg1, arg2):
 			exportlist = []
 			for i in deflist:
 				exportlist.append(comicdef[i])
-			db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?,?)", exportlist) #INSERT THE VALUES
+			db.execute("INSERT INTO  comicdef values (?,?,?,?,?,?,?,?)", exportlist) #INSERT THE VALUES
 			conn.commit()
 			conn.close()
 		except Exception as e:
-			#print(e)
+			print(e)
 			pass
 		comiclist.append(comicdef["comicname"])
 	return comiclist
